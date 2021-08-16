@@ -1,0 +1,12 @@
+﻿@inject SignInManager<IdentityUser> SignInManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <span>Hola, @User.Identity.Name</span>
+    <a href="~/Identity/MyAccount/Logout">Salir</a>
+}
+else
+{
+    <a href="~/Identity/MyAccount/Login">Iniciar sesión</a>
+    <a href="~/Identity/MyAccount/Register">Registrarse</a>
+}
