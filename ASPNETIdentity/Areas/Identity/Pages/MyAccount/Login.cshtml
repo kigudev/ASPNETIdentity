@@ -18,3 +18,11 @@
         <button type="submit" class="btn btn-primary">Log in</button>
     </div>
 </form>
+
+<div>Or</div>
+<form method="post" action="~/Identity/MyAccount/ExternalLogin">
+    @foreach(var provider in Model.ExternalLogins)
+    {
+        <button type="submit" class="btn btn-info" name="provider" value="@provider.Name">Connect with @provider.DisplayName</button>
+    }
+</form>

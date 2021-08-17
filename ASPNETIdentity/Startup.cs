@@ -32,6 +32,13 @@ namespace ASPNETIdentity
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationContext>();
 
+
+            services.AddAuthentication()
+                .AddFacebook(facebookOptions => {
+                    facebookOptions.AppId = Configuration.GetSection("Facebook:AppId").Value;
+                    facebookOptions.AppSecret = Configuration.GetSection("Facebook:AppSecret").Value;
+                });
+
             services.AddRazorPages();
 
             services.Configure<IdentityOptions>(options => {

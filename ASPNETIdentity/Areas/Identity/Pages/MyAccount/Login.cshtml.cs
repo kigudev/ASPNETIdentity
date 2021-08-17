@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using ASPNETIdentity.Data;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -22,8 +23,11 @@ namespace ASPNETIdentity.Areas.Identity.Pages.MyAccount
         [BindProperty]
         public InputModel Input { get; set; }
 
-        public void OnGet()
+        public IEnumerable<AuthenticationScheme> ExternalLogins { get; set; }
+
+        public async Task OnGetAsync()
         {
+            ExternalLogins = await _signInManager.GetExternalAuthenticationSchemesAsync();
         }
 
         public async Task<IActionResult> OnPostAsync()
