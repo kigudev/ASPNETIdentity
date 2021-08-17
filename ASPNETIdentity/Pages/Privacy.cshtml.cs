@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 
 namespace ASPNETIdentity.Pages
 {
-    [Authorize]
+
+    [Authorize(Roles = "Administrator")]
     public class PrivacyModel : PageModel
     {
         private readonly ILogger<PrivacyModel> _logger;
@@ -21,6 +22,11 @@ namespace ASPNETIdentity.Pages
 
         public void OnGet()
         {
+        }
+
+        public void OnPost()
+        {
+
         }
     }
 }

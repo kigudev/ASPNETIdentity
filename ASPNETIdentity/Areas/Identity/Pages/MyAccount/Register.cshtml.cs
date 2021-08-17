@@ -12,10 +12,12 @@ namespace ASPNETIdentity.Areas.Identity.Pages.MyAccount
     public class RegisterModel : PageModel
     {
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signManager;
 
-        public RegisterModel(UserManager<IdentityUser> userManager)
+        public RegisterModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signManager)
         {
             _userManager = userManager;
+            _signManager = signManager;
         }
 
         [BindProperty]
@@ -39,7 +41,19 @@ namespace ASPNETIdentity.Areas.Identity.Pages.MyAccount
 
                 if (result.Succeeded)
                 {
-                    return RedirectToPage("/Index");
+                    var roleResult = await _userManager.AddToRoleAsync(user, Input.Role);
+                    if (roleResult.Succeeded)
+                    {
+                        await _signManager.SignInAsync(user, true);
+                        return RedirectToPage("/Index");
+                    }
+                    else
+                    {
+                        // si no se puede agregar el rol al usuario vamos a eliminar el usuario recien
+                        // creado porque no se cumplió con lo que recibimos del formulario.
+                        await _userManager.DeleteAsync(user);
+                        ModelState.AddModelError(string.Empty, "No se pudo agregar al usuario");
+                    }
                 }
                 else
                 {
@@ -72,6 +86,8 @@ namespace ASPNETIdentity.Areas.Identity.Pages.MyAccount
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+            [Required]
+            public string Role { get; set; }
         }
     }
 
