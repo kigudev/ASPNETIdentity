@@ -6,6 +6,8 @@
 
   <ItemGroup>
     <None Remove="Areas\Identity\Pages\MyAccount\Logout.cshtml.cs~RFb5c3f98.TMP" />
+    <None Remove="Pages\Privacy.cshtml.cs~RF1f5b987.TMP" />
+    <None Remove="Pages\Privacy.cshtml.cs~RFbc773a0.TMP" />
   </ItemGroup>
 
   <ItemGroup>

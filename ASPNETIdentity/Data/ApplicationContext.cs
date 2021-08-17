@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ASPNETIdentity.Data
 {
-    public class ApplicationContext: IdentityDbContext
+    public class ApplicationContext: IdentityDbContext<ApplicationUser>
     {
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {

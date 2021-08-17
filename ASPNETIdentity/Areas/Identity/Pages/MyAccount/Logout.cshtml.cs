@@ -1,3 +1,4 @@
+using ASPNETIdentity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -7,9 +8,9 @@ namespace ASPNETIdentity.Areas.Identity.Pages.MyAccount
 {
     public class LogoutModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public LogoutModel(SignInManager<IdentityUser> signInManager)
+        public LogoutModel(SignInManager<ApplicationUser> signInManager)
         {
             _signInManager = signInManager;
         }

@@ -27,9 +27,11 @@ namespace ASPNETIdentity
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationContext>(c => c.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddRoles<IdentityRole>()
+            
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationContext>();
+
             services.AddRazorPages();
 
             services.Configure<IdentityOptions>(options => {
@@ -59,7 +61,7 @@ namespace ASPNETIdentity
                 options.Cookie.HttpOnly = true;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
                 options.LoginPath = "/Identity/MyAccount/Login";
-                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+                options.AccessDeniedPath = "/Identity/MyAccount/AccessDenied";
             });
         }
 

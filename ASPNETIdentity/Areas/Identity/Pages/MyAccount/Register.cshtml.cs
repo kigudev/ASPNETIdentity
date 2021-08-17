@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using ASPNETIdentity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,13 +12,14 @@ namespace ASPNETIdentity.Areas.Identity.Pages.MyAccount
 {
     public class RegisterModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signManager;
 
-        public RegisterModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signManager)
+        public RegisterModel(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signManager)
         {
             _userManager = userManager;
             _signManager = signManager;
+
         }
 
         [BindProperty]
@@ -31,7 +33,7 @@ namespace ASPNETIdentity.Areas.Identity.Pages.MyAccount
         {
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser
+                var user = new ApplicationUser
                 {
                     UserName = Input.Email,
                     Email = Input.Email
@@ -44,7 +46,7 @@ namespace ASPNETIdentity.Areas.Identity.Pages.MyAccount
                     var roleResult = await _userManager.AddToRoleAsync(user, Input.Role);
                     if (roleResult.Succeeded)
                     {
-                        await _signManager.SignInAsync(user, true);
+                        //await _signManager.SignInAsync(user, true);
                         return RedirectToPage("/Index");
                     }
                     else
